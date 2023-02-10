@@ -1,46 +1,17 @@
-THIS_FILE := $(lastword $(MAKEFILE_LIST))
+DOCKER_COMPOSE_PATH= ./srcs/docker-compose.yml
 
-docker-compose := srcs/docker-compose.yml
+all: folders
+	docker-compose -f ${DOCKER_COMPOSE_PATH} up -d --build
 
-all:	build up
+folders:
+	sudo mkdir -p ${HOME}/data/mariadb
+	sudo mkdir -p ${HOME}/data/wordpress
 
-build:
-		mkdir -p ${HOME}/data/nginx/
-		mkdir -p ${HOME}/data/mariadb/
-		docker-compose -f $(docker-compose) build $(c)
+clean:
+	-docker stop `docker ps -qa` 2> /dev/null
+	-docker rm `docker ps -qa` 2> /dev/null
+	-docker rmi -f `docker images -qa` 2> /dev/null
+	-docker volume rm `docker volume ls -q` 2> /dev/null
+	-docker network rm `docker network ls -q` 2> /dev/null
 
-up:
-		docker-compose -f $(docker-compose) up -d $(c)
-
-start:
-		docker-compose -f $(docker-compose) start $(c)
-
-down:
-		docker-compose -f $(docker-compose) down $(c)
-
-destroy:
-		docker-compose -f $(docker-compose) down --rmi all -v $(c)
-
-stop:
-		docker-compose -f $(docker-compose) stop $(c)
-
-restart:
-		docker-compose -f $(docker-compose) stop $(c)
-		docker-compose -f $(docker-compose) up -d $(c)
-
-logs:
-		docker-compose -f $(docker-compose) logs --tail=100 -f $(c)
-
-logs-api:
-		docker-compose -f $(docker-compose) logs --tail=100 -f api
-
-ps:
-		docker-compose -f $(docker-compose) ps
-
-fclean: destroy
-		rm -rf ${HOME}/data/mariadb/*
-		rm -rf ${HOME}/data/nginx/*
-
-re: fclean all
-
-.PHONY: all help build up start down destroy stop restart logs logs-api ps re
+re: clean all
