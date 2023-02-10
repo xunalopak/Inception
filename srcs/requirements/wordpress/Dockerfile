@@ -15,7 +15,7 @@ COPY ./conf/wp-config.php ./wp-config.php
 RUN rm -f /var/www/wordpress/wp-config-sample.php
 
 COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/
-RUN	chown -R www-data:www-data /var/www/html/wp-content/
+RUN	chown -R www-data:www-data /var/www/
 
 
 COPY ./tools/start.sh ./start.sh
