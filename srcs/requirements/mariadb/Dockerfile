@@ -1,7 +1,5 @@
 FROM debian:buster
 
-MAINTAINER mathmart <mathmart@student.42lyon.fr>
-
 RUN apt-get update -y
 RUN apt-get install -y mariadb-server expect
 
