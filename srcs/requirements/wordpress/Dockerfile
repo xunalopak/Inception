@@ -18,8 +18,4 @@ RUN chmod -R -wx,u+rwX,g+rX,o+rX /var/www/
 COPY ./conf/wp-config.php ./wp-config.php
 RUN rm -f /var/www/wordpress/wp-config-sample.php
 
-COPY ./tools/start.sh ./start.sh
-RUN chmod +x ./start.sh
-
-CMD start.sh
 CMD [ "/usr/sbin/php-fpm7.3", "-F" ]
