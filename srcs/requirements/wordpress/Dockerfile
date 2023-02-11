@@ -12,10 +12,9 @@ RUN cd /var/www/ && wget http://fr.wordpress.org/latest-fr_FR.tar.gz && \
 RUN mv /var/www/wordpress/ /var/www/html
 
 COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/
-RUN	chown -R www-data:www-data /var/www/
-RUN chmod -R -wx,u+rwX,g+rX,o+rX /var/www/
+RUN	chown -R www-data:www-data /var/www/html
+RUN chmod -R -wx,u+rwX,g+rX,o+rX /var/www/html
 
 COPY ./conf/wp-config.php ./wp-config.php
-RUN rm -f /var/www/wordpress/wp-config-sample.php
 
 CMD [ "/usr/sbin/php-fpm7.3", "-F" ]

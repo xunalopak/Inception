@@ -4,8 +4,8 @@ all: folders
 	docker-compose -f ${DOCKER_COMPOSE_PATH} up -d --build
 
 folders:
-	sudo mkdir -p ${HOME}/data/mariadb
-	sudo mkdir -p ${HOME}/data/wordpress
+	mkdir -p ${HOME}/data/mariadb
+	mkdir -p ${HOME}/data/wordpress
 
 clean:
 	-docker stop `docker ps -qa` 2> /dev/null
